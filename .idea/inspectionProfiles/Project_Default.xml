@@ -1,0 +1,70 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="7">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="label" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="arrow" />
+          <option value="asgiref" />
+          <option value="binaryornot" />
+          <option value="certifi" />
+          <option value="chardet" />
+          <option value="charset-normalizer" />
+          <option value="click" />
+          <option value="colorama" />
+          <option value="cookiecutter" />
+          <option value="Django" />
+          <option value="django-browser-reload" />
+          <option value="django-ckeditor" />
+          <option value="django-js-asset" />
+          <option value="django-tailwind" />
+          <option value="django-tinymce" />
+          <option value="gunicorn" />
+          <option value="idna" />
+          <option value="Jinja2" />
+          <option value="jinja2-time" />
+          <option value="MarkupSafe" />
+          <option value="Pillow" />
+          <option value="psycopg2" />
+          <option value="python-dateutil" />
+          <option value="python-slugify" />
+          <option value="PyYAML" />
+          <option value="requests" />
+          <option value="six" />
+          <option value="sqlparse" />
+          <option value="text-unidecode" />
+          <option value="tzdata" />
+          <option value="urllib3" />
+          <option value="whitenoise" />
+          <option value="setuptools" />
+          <option value="wheel" />
+          <option value="cffi" />
+          <option value="cryptography" />
+          <option value="grpcio" />
+          <option value="grpcio-status" />
+          <option value="proto-plus" />
+          <option value="protobuf" />
+          <option value="pyasn1" />
+          <option value="pyasn1_modules" />
+          <option value="pycparser" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

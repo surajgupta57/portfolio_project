@@ -1,0 +1,46 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ site_settings.site_title }}</title>
+<meta name="description" content="{{ site_settings.meta_description }}">
+{% if site_settings.favicon %}<link rel="icon" href="{{ site_settings.favicon.url }}">{% endif %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{ site_settings.google_fonts_url }}" rel="stylesheet">
+
+<style>
+/* ===== Values below are 100% controlled from Django Admin > Site Settings ===== */
+:root{
+  --ink: {{ site_settings.color_ink }};
+  --ink-2: {{ site_settings.color_ink_2 }};
+  --ink-3: {{ site_settings.color_ink_3 }};
+  --paper: {{ site_settings.color_paper }};
+  --paper-2: {{ site_settings.color_paper_2 }};
+  --emerald: {{ site_settings.color_emerald }};
+  --emerald-l: {{ site_settings.color_emerald_light }};
+  --gold: {{ site_settings.color_gold }};
+  --charcoal: {{ site_settings.color_charcoal }};
+  --slate: {{ site_settings.color_slate }};
+  --cream: {{ site_settings.color_cream }};
+  --line-light: rgba(16,28,48,0.12);
+  --line-dark: rgba(237,232,220,0.14);
+  --display: '{{ site_settings.display_font }}', serif;
+  --body: '{{ site_settings.body_font }}', sans-serif;
+  --mono: '{{ site_settings.mono_font }}', monospace;
+  --maxw: {{ site_settings.max_width_px }}px;
+  --section-pad: {{ site_settings.section_padding_px }}px;
+  --base-fs: {{ site_settings.base_font_size_px }}px;
+}
+</style>
+<link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}">
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+<script src="{% static 'portfolio/js/main.js' %}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

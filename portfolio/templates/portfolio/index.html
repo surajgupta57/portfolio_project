@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+
+<header class="site">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="mark">{{ site_settings.brand_initials }}</span> {{ site_settings.brand_name|upper }}</a>
+    <nav class="nav-links">
+      {% for link in nav_links %}
+        <a href="#{{ link.section_anchor }}"{% if link.is_cta_button %} class="nav-cta"{% endif %}>{{ link.label }}</a>
+      {% endfor %}
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">{{ hero.eyebrow_text }}</p>
+        <h1 class="hero-name">{{ hero.full_name|linebreaksbr }}</h1>
+        <p class="hero-role">{{ hero.role_title }}</p>
+        <p class="hero-desc">{{ hero.description }}</p>
+        <p class="hero-loc"><span class="dot"></span>{{ hero.location }}</p>
+        <div class="btn-row">
+          <a href="{{ hero.primary_button_link }}" class="btn btn-primary">{{ hero.primary_button_text }}</a>
+          <a href="{{ hero.secondary_button_link }}" class="btn btn-ghost">{{ hero.secondary_button_text }}</a>
+        </div>
+        <div class="stat-row">
+          {% for stat in hero_stats %}
+          <div class="stat"><b>{{ stat.value }}</b><span>{{ stat.label }}</span></div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if ledger_modules %}
+      <div class="ledger reveal">
+        <div class="ledger-head">
+          <span>{{ hero.ledger_title }}</span>
+          <span class="live"><i></i>{{ hero.ledger_live_label }}</span>
+        </div>
+        <div class="ledger-viewport" id="ledgerViewport">
+          {% for module in ledger_modules %}
+          <div class="ledger-card{% if forloop.first %} active{% endif %}">
+            <span class="tag">{{ module.tag }}</span>
+            <h4>{{ module.title }}</h4>
+            <p>{{ module.description }}</p>
+            <div class="ledger-lines">
+              {% for line in module.lines.all %}
+              <div class="ledger-line"><span>{{ line.label }}</span><b>{{ line.value }}</b></div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="ledger-dots" id="ledgerDots">
+          {% for module in ledger_modules %}
+          <button {% if forloop.first %} class="active"{% endif %}></button>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="wrap about-grid">
+      <div class="reveal">
+        <p class="eyebrow">{{ about.eyebrow_text }}</p>
+        <h2 class="h-tag">{{ about.heading }}</h2>
+      </div>
+      <div class="reveal">
+        <p>{{ about.paragraph_intro }}</p>
+        {% if about.paragraph_body %}<p>{{ about.paragraph_body }}</p>{% endif %}
+        {% if about_chips %}
+        <div class="chip-cloud">
+          {% for chip in about_chips %}
+          <span class="chip">{{ chip.text }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  {% if experiences %}
+  <section class="section" id="experience" style="background:var(--paper-2);">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">Experience</p>
+        <h2 class="h-tag">A record of shipped, production systems.</h2>
+      </div>
+
+      <div class="timeline">
+        {% for exp in experiences %}
+        <div class="tl-item reveal">
+          <div class="tl-date">{{ exp.date_range|linebreaksbr }}</div>
+          <div class="tl-body">
+            <h3 class="tl-role">{{ exp.role_title }}</h3>
+            <p class="tl-org">{{ exp.organization }}</p>
+            {% if exp.location_meta %}<p class="tl-meta">{{ exp.location_meta }}</p>{% endif %}
+            {% if exp.bullets.all %}
+            <ul class="tl-list">
+              {% for bullet in exp.bullets.all %}
+              <li>{{ bullet.text }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+            {% if exp.tech_stack.all %}
+            <div class="tl-stack">
+              {% for tech in exp.tech_stack.all %}<span>{{ tech.name }}</span>{% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- SKILLS -->
+  {% if skill_categories %}
+  <section class="section section-dark" id="skills">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">Skills</p>
+        <h2 class="h-tag">The stack, by function — hover or tap a category.</h2>
+      </div>
+
+      <div class="skills-panel reveal">
+        <div class="skill-tabs" id="skillTabs">
+          {% for cat in skill_categories %}
+          <div class="skill-tab{% if forloop.first %} active{% endif %}" data-pane="{{ cat.slug }}">{{ cat.name }} <span class="n">{{ forloop.counter|stringformat:"02d" }}</span></div>
+          {% endfor %}
+        </div>
+        <div class="skill-panes">
+          {% for cat in skill_categories %}
+          <div class="skill-pane{% if forloop.first %} active{% endif %}" id="pane-{{ cat.slug }}">
+            <h4>{{ cat.name }}</h4>
+            <div class="skill-grid">
+              {% for skill in cat.skills.all %}<span>{{ skill.name }}</span>{% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- PROJECTS -->
+  {% if projects %}
+  <section class="section" id="projects">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">Selected Work</p>
+        <h2 class="h-tag">Products and platforms shipped to production.</h2>
+      </div>
+      <div class="proj-grid">
+        {% for project in projects %}
+        <div class="proj-card reveal">
+          <span class="proj-num">{{ project.display_number }}</span>
+          {% if project.image %}<img class="proj-thumb" src="{{ project.image.url }}" alt="{{ project.title }}">{% endif %}
+          {% if project.link %}<a href="{{ project.link }}" target="_blank" rel="noopener"><h4>{{ project.title }}</h4></a>{% else %}<h4>{{ project.title }}</h4>{% endif %}
+          <p>{{ project.description }}</p>
+          {% if project.tech_stack.all %}
+          <div class="proj-stack">
+            {% for tech in project.tech_stack.all %}<span>{{ tech.name }}</span>{% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- EDUCATION -->
+  {% if education_items %}
+  <section class="section" id="education" style="background:var(--paper-2);">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">Education</p>
+        <h2 class="h-tag">Foundations.</h2>
+      </div>
+      <div class="edu-grid">
+        {% for edu in education_items %}
+        <div class="edu-card reveal">
+          <p class="yr">{{ edu.year_range }}</p>
+          <h4>{{ edu.degree }}</h4>
+          {% if edu.description %}<p>{{ edu.description }}</p>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- TESTIMONIALS -->
+  {% if testimonials %}
+  <section class="section section-dark">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;">
+        <p class="eyebrow" style="justify-content:center;">Recommendations</p>
+        <h2 class="h-tag" style="margin:0 auto;">From people who've worked with him.</h2>
+      </div>
+      <div class="testi-wrap reveal">
+        <div class="testi-viewport" id="testiViewport">
+          {% for t in testimonials %}
+          <div class="testi-card{% if forloop.first %} active{% endif %}">
+            <q>{{ t.quote }}</q>
+            <div class="testi-name">{{ t.name }}</div>
+            {% if t.role %}<div class="testi-role">{{ t.role }}</div>{% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        <div class="testi-dots" id="testiDots">
+          {% for t in testimonials %}
+          <button {% if forloop.first %} class="active"{% endif %}></button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">{{ contact.eyebrow_text }}</p>
+        <h2 class="h-tag">{{ contact.heading }}</h2>
+        {% if contact.lede %}<p class="lede">{{ contact.lede }}</p>{% endif %}
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          {% for info in contact_info %}
+          <a class="item" href="{{ info.link }}" {% if info.icon == 'linkedin' or info.icon == 'github' or info.icon == 'website' %}target="_blank" rel="noopener"{% endif %}>
+            <span>{{ info.label }}</span><span class="arrow">→</span>
+          </a>
+          {% endfor %}
+        </div>
+
+        <form class="reveal" id="contactForm" data-mailto="{{ contact.mailto_address }}">
+          <div class="form-field">
+            <label for="cname">Name</label>
+            <input type="text" id="cname" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="cemail">Email</label>
+            <input type="email" id="cemail" name="email" required>
+          </div>
+          <div class="form-field">
+            <label for="cmsg">Message</label>
+            <textarea id="cmsg" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send message</button>
+          {% if contact.form_note %}<p class="form-note">{{ contact.form_note }}</p>{% endif %}
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>{{ site_settings.footer_text }}</span>
+    <span>{{ site_settings.footer_tagline }}</span>
+    {% for link in nav_links %}{% if link.is_cta_button %}<a href="#{{ link.section_anchor }}">{{ link.label }} ↗</a>{% endif %}{% endfor %}
+  </div>
+</footer>
+
+{% endblock %}
