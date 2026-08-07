@@ -41,10 +41,10 @@ class Command(BaseCommand):
         hero.location = "Gorakhpur, Uttar Pradesh, India"
         hero.primary_button_text = "Get in touch"
         hero.primary_button_link = "#contact"
-        hero.secondary_button_text = "View experience"
-        hero.secondary_button_link = "#experience"
-        hero.ledger_title = "Munshiiji ERP — Module Ledger"
-        hero.ledger_live_label = "In production"
+        hero.secondary_button_text = "View LinkedIn"
+        hero.secondary_button_link = "https://www.linkedin.com/in/suraj-shankar-gupta/"
+        hero.ledger_title = "Munshiiji ERP — Inside the build"
+        hero.ledger_live_label = "Shipped & maintained"
         hero.save()
 
         models.HeroStat.objects.all().delete()
@@ -96,29 +96,38 @@ class Command(BaseCommand):
         # ---- Experience ----
         models.Experience.objects.all().delete()
         exp_data = [
-            ("Lead Backend Developer, ERP & SaaS", "Munshiiji ERP Software", "Jan 2026 — Present", "Remote · 7 mos", True,
-             ["Leading development of a cloud-based ERP platform covering Inventory, Accounting, CRM, Sales, Purchase, GST Billing, and Financial Reporting.",
-              "Designed and implemented a scalable multi-tenant SaaS architecture with secure role-based access control.",
-              "Built inventory modules — stock tracking, warehouse management, stock adjustments, opening stock automation.",
-              "Built accounting modules — ledger management, chart of accounts, payment collection, outstanding tracking, financial reports.",
-              "Integrated WhatsApp notifications, payment gateways, cloud storage, and reporting; own production deployments, monitoring, and security."],
-             ["Python", "Django", "DRF", "PostgreSQL"]),
-            ("Python / Django Developer", "Freelance · Self-Employed", "Oct 2023 — Present", "Remote · 2 yrs 10 mos", True,
-             ["Developed and maintained custom web applications, ERP systems, inventory solutions, and business-automation platforms for clients.",
-              "Built scalable REST APIs and integrated payment gateways, WhatsApp APIs, SMS gateways, and email services.",
-              "Owned the full software lifecycle — requirements, development, deployment, maintenance, and support.",
-              "Administered Linux servers, SSL, cloud infrastructure, backups, and application security."],
+            ("Lead Software Developer", "Smart Engineering & Automation Solutions", "Oct 2025 — Present", "New Delhi", True,
+             ["Lead development of a Django-based CRM and business management platform supporting lead management, quotations, follow-ups, and sales pipeline workflows.",
+              "Built employee productivity tracking, internal communication, notifications, product catalogue management, and bulk data import modules.",
+              "Designed role-based access controls, operational dashboards, and scalable backend workflows for secure multi-user operations.",
+              "Automated application deployment, database backups, monitoring, and production maintenance to improve platform reliability."],
+             ["Python", "Django", "PostgreSQL", "CRM", "Linux"]),
+            ("Freelance Software Developer — ERP & SaaS", "Munshiiji ERP Solutions", "Jul 2025 — Oct 2025", "Remote", False,
+             ["Developed a multi-tenant cloud ERP covering inventory, warehouses, accounting, CRM, sales, purchasing, GST billing, and financial reporting.",
+              "Implemented stock tracking, opening stock, adjustments, ledgers, chart of accounts, payment collection, and outstanding tracking.",
+              "Integrated WhatsApp notifications, payment gateways, and reporting services; optimized queries and managed production deployment and security."],
+             ["Python", "Django", "DRF", "PostgreSQL", "AWS"]),
+            ("Freelance Python/Django Developer", "Independent", "Oct 2023 — Present", "Remote", True,
+             ["Delivered production web applications, ERP systems, inventory solutions, REST APIs, and business automation workflows for clients across industries.",
+              "Integrated payment, WhatsApp, SMS, and email services; administered AWS/Linux hosting, SSL, backups, application security, and ongoing support.",
+              "Developed WordPress business websites with SEO, performance, and security optimization."],
              ["Python", "Django", "PostgreSQL", "AWS", "Linux", "WordPress"]),
-            ("Backend Developer", "Ezyschooling.com · via Ashmay Technologies Pvt. Ltd.", "Mar 2022 — Aug 2023", "Delhi · On-site · 1 yr 6 mos", False,
-             ["Built backend for Ezyschooling, a school-admissions and parenting platform, on Django, Python, and PostgreSQL — with S3 for media and Elasticsearch for indexing.",
-              "Wrote API test suites in Postman and load-tested with Apache JMeter; integrated third-party APIs for dynamic data.",
-              "Ran workload assessments and redesigned operational processes, lifting productivity 50% by integrating WhatsApp and payment settlement flows."],
+            ("Freelance Software Developer", "Smart Engineering & Automation Solutions", "Oct 2023 — Apr 2025", "New Delhi", False,
+             ["Developed and maintained Django applications and relational databases from requirements through testing, deployment, documentation, and support.",
+              "Improved application reliability, security, and performance through debugging, testing, query optimization, and stakeholder collaboration."],
+             ["Python", "Django", "PostgreSQL", "REST APIs"]),
+            ("Backend Developer — Ezyschooling", "Ashmay Technologies Private Limited", "Mar 2022 — Aug 2023", "Delhi", False,
+             ["Enhanced a Django/PostgreSQL school admissions platform using AWS S3 and Elasticsearch; resolved backend bottlenecks and admission-form issues.",
+              "Built and tested REST API integrations using Postman and Apache JMeter, including WhatsApp and payment settlement workflows.",
+              "Introduced operational improvements reported to increase productivity by 50%."],
              ["Django", "PostgreSQL", "Amazon S3", "Elasticsearch", "Postman", "JMeter"]),
-            ("Software Developer", "Shreyas Technosoft", "Mar 2021 — Feb 2022", "Pune, Maharashtra · On-site · 1 yr", False,
-             ["Built a REST-API-driven backend for a public discussion forum (greenhydrogen-india.com) and an MVT-based eco-campus site.",
-              "Co-built a recruitment portal for NEERI with the team.",
-              "Worked extensively with Django templates, forms, and ORM, plus validators and CSV/TXT/JSON reporting pipelines against PostgreSQL."],
-             ["Python 3", "Django", "PostgreSQL", "HTML/CSS3", "GitHub"]),
+            ("Software Developer — Government Projects", "Shreyas Technosoft Pvt. Ltd.", "Mar 2021 — Feb 2022", "Pune, Maharashtra", False,
+             ["Built Django REST API backends and web applications for Green Hydrogen India, NEERI recruitment, and eco-campus initiatives.",
+              "Developed PostgreSQL data workflows and generated TXT, CSV, and JSON reports using Python and Django."],
+             ["Python", "Django", "Django REST Framework", "PostgreSQL"]),
+            ("Co-Founder & Software Developer", "Roomsmate", "Nov 2019 — Mar 2021", "Nagpur, Maharashtra", False,
+             ["Co-founded and developed a responsive Django/PostgreSQL platform connecting students and professionals with hostels, PGs, rentals, and roommates."],
+             ["Python", "Django", "PostgreSQL", "HTML", "CSS"]),
         ]
         for i, (role, org, dates, meta, current, bullets, tech) in enumerate(exp_data):
             e = models.Experience.objects.create(
@@ -182,14 +191,14 @@ class Command(BaseCommand):
         contact.heading = "Let's build something reliable."
         contact.lede = "Open to lead backend / senior Python roles, ERP & SaaS engineering engagements, and freelance projects."
         contact.form_note = "Opens your email client with this message pre-filled — no data leaves your browser."
-        contact.mailto_address = "your.email@example.com"
+        contact.mailto_address = "ssepadrauna@gmail.com"
         contact.save()
 
         models.ContactInfo.objects.all().delete()
         contact_data = [
-            ("linkedin", "LinkedIn — in/suraj-shankar-gupta", "https://in.linkedin.com/in/suraj-shankar-gupta"),
-            ("email", "Email — your.email@example.com", "mailto:your.email@example.com"),
-            ("phone", "Phone — +91 00000 00000", "tel:+910000000000"),
+            ("linkedin", "LinkedIn — in/suraj-shankar-gupta", "https://www.linkedin.com/in/suraj-shankar-gupta/"),
+            ("email", "Email — ssepadrauna@gmail.com", "mailto:ssepadrauna@gmail.com"),
+            ("phone", "Phone — +91 86683 29719", "tel:+918668329719"),
             ("location", "Location — Gorakhpur, Uttar Pradesh, India", "#"),
         ]
         for i, (icon, label, link) in enumerate(contact_data):

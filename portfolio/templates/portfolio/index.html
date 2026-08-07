@@ -28,7 +28,7 @@
         <p class="hero-loc"><span class="dot"></span>{{ hero.location }}</p>
         <div class="btn-row">
           <a href="{{ hero.primary_button_link }}" class="btn btn-primary">{{ hero.primary_button_text }}</a>
-          <a href="{{ hero.secondary_button_link }}" class="btn btn-ghost">{{ hero.secondary_button_text }}</a>
+          <a href="{{ hero.secondary_button_link }}" class="btn btn-ghost"{% if 'http' in hero.secondary_button_link %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ hero.secondary_button_text }}</a>
         </div>
         <div class="stat-row">
           {% for stat in hero_stats %}
@@ -45,7 +45,7 @@
         </div>
         <div class="ledger-viewport" id="ledgerViewport">
           {% for module in ledger_modules %}
-          <div class="ledger-card{% if forloop.first %} active{% endif %}">
+          <div class="ledger-card{% if forloop.first %} active{% endif %}" data-index="{{ forloop.counter|stringformat:'02d' }}">
             <span class="tag">{{ module.tag }}</span>
             <h4>{{ module.title }}</h4>
             <p>{{ module.description }}</p>
@@ -59,7 +59,7 @@
         </div>
         <div class="ledger-dots" id="ledgerDots">
           {% for module in ledger_modules %}
-          <button {% if forloop.first %} class="active"{% endif %}></button>
+          <button type="button" aria-label="Show {{ module.title }}"{% if forloop.first %} class="active"{% endif %}></button>
           {% endfor %}
         </div>
       </div>
@@ -209,7 +209,7 @@
     <div class="wrap">
       <div class="reveal" style="text-align:center;">
         <p class="eyebrow" style="justify-content:center;">Recommendations</p>
-        <h2 class="h-tag" style="margin:0 auto;">From people who've worked with him.</h2>
+        <h2 class="h-tag" style="margin:0 auto;">From people who’ve worked with me.</h2>
       </div>
       <div class="testi-wrap reveal">
         <div class="testi-viewport" id="testiViewport">
@@ -244,7 +244,7 @@
         <div class="contact-info reveal">
           {% for info in contact_info %}
           <a class="item" href="{{ info.link }}" {% if info.icon == 'linkedin' or info.icon == 'github' or info.icon == 'website' %}target="_blank" rel="noopener"{% endif %}>
-            <span>{{ info.label }}</span><span class="arrow">→</span>
+            <span>{{ info.label }}</span><span class="arrow" aria-hidden="true">→</span>
           </a>
           {% endfor %}
         </div>
