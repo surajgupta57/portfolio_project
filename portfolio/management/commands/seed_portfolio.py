@@ -63,6 +63,8 @@ class Command(BaseCommand):
              [("Tax Compliance", "GST-ready"), ("Invoicing", "Automated"), ("Reports", "Exportable")]),
             ("Module 05", "Financial Reporting", "Consolidated financial reports across inventory, sales, purchase, and accounting data.",
              [("Report Types", "12+"), ("Refresh", "Scheduled"), ("Access Control", "Role-based")]),
+            ("Module 06", "SEAS CRM Platform", "Django-based CRM and business management platform for leads, quotations, follow-ups, product catalogue, and operational dashboards.",
+             [("Lead Pipeline", "Active"), ("Access Control", "Role-based"), ("Ops Reliability", "Monitored")]),
         ]
         for i, (tag, title, desc, lines) in enumerate(ledger_data):
             m = models.LedgerModule.objects.create(tag=tag, title=title, description=desc, order=i)
