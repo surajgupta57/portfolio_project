@@ -11,7 +11,7 @@
         <a href="#{{ link.section_anchor }}"{% if link.is_cta_button %} class="nav-cta"{% endif %}>{{ link.label }}</a>
       {% endfor %}
     </nav>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -19,11 +19,16 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-ornament" aria-hidden="true">
+      <span class="ornament-ring"></span>
+      <span class="ornament-cross">+</span>
+      <span class="ornament-dots"></span>
+    </div>
     <div class="wrap hero-grid">
-      <div>
+      <div class="hero-copy">
         <p class="eyebrow">{{ hero.eyebrow_text }}</p>
         <h1 class="hero-name">{{ hero.full_name|linebreaksbr }}</h1>
-        <p class="hero-role">{{ hero.role_title }}</p>
+        <p class="hero-role"><span>{{ hero.role_title }}</span></p>
         <p class="hero-desc">{{ hero.description }}</p>
         <p class="hero-loc"><span class="dot"></span>{{ hero.location }}</p>
         <div class="btn-row">
@@ -32,7 +37,7 @@
         </div>
         <div class="stat-row">
           {% for stat in hero_stats %}
-          <div class="stat"><b>{{ stat.value }}</b><span>{{ stat.label }}</span></div>
+          <div class="stat"><b data-count="{{ stat.value }}">{{ stat.value }}</b><span>{{ stat.label }}</span></div>
           {% endfor %}
         </div>
       </div>
@@ -115,6 +120,15 @@
             {% if exp.tech_stack.all %}
             <div class="tl-stack">
               {% for tech in exp.tech_stack.all %}<span>{{ tech.name }}</span>{% endfor %}
+            </div>
+            {% endif %}
+            {% if exp.site_links.all %}
+            <div class="tl-links" aria-label="Live sites for {{ exp.organization }}">
+              {% for site in exp.site_links.all %}
+              <a href="{{ site.url }}" target="_blank" rel="noopener noreferrer">
+                <span>{{ site.label }}</span><i aria-hidden="true">↗</i>
+              </a>
+              {% endfor %}
             </div>
             {% endif %}
           </div>

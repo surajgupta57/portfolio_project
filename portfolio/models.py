@@ -37,6 +37,11 @@ class SingletonModel(models.Model):
 # 1. GLOBAL SITE SETTINGS  -> fonts, colours, meta info, footer, branding
 # ---------------------------------------------------------------------------
 class SiteSettings(SingletonModel):
+    ANIMATION_MODE_CHOICES = [
+        ("full", "Full — always animate"),
+        ("device", "Device preference — respect reduced motion"),
+        ("off", "Off — disable animation"),
+    ]
     # Meta / branding
     site_title = models.CharField(max_length=120, default="Your Name — Portfolio")
     meta_description = models.CharField(max_length=300, blank=True)
@@ -70,6 +75,12 @@ class SiteSettings(SingletonModel):
     # Layout
     max_width_px = models.PositiveIntegerField(default=1180)
     section_padding_px = models.PositiveIntegerField(default=112)
+    animation_mode = models.CharField(
+        max_length=12,
+        choices=ANIMATION_MODE_CHOICES,
+        default="device",
+        help_text="Controls motion throughout the public portfolio.",
+    )
 
     # Footer
     footer_text = models.CharField(max_length=200, default="© 2026 Your Name.")
@@ -253,6 +264,20 @@ class ExperienceTech(OrderedModel):
 
     def __str__(self):
         return self.name
+
+
+class ExperienceLink(OrderedModel):
+    experience = models.ForeignKey(Experience, related_name="site_links", on_delete=models.CASCADE)
+    label = models.CharField(max_length=80, default="View live site")
+    url = models.URLField(max_length=500)
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "Experience live-site link"
+        verbose_name_plural = "Experience live-site links"
+
+    def __str__(self):
+        return f"{self.label} — {self.experience.organization}"
 
 
 # ---------------------------------------------------------------------------

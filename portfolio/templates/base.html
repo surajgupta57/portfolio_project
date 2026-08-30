@@ -35,12 +35,16 @@
   --base-fs: {{ site_settings.base_font_size_px }}px;
 }
 </style>
-<link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}?v=20260807-2">
+<link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}?v=20260828-3">
 {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body data-animation-mode="{{ site_settings.animation_mode }}">
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 {% block body %}{% endblock %}
-<script src="{% static 'portfolio/js/main.js' %}"></script>
+<button class="scroll-top" id="scrollTop" type="button" aria-label="Back to top">
+  <span aria-hidden="true">↑</span>
+</button>
+<script src="{% static 'portfolio/js/main.js' %}?v=20260828-1"></script>
 {% block extra_scripts %}{% endblock %}
 </body>
 </html>

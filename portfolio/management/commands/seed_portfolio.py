@@ -138,6 +138,28 @@ class Command(BaseCommand):
             for j, t in enumerate(tech):
                 models.ExperienceTech.objects.create(experience=e, name=t, order=j)
 
+        experience_links = {
+            "Lead Software Developer": [
+                ("Company website", "https://seas-india.com/"),
+            ],
+            "Freelance Software Developer — ERP & SaaS": [
+                ("ERP login", "https://munshiiji.shreeshankarelectronics.com/"),
+            ],
+            "Backend Developer — Ezyschooling": [
+                ("Ezyschooling", "https://ezyschooling.com/"),
+                ("Partner portal", "https://inside.ezyschooling.com/login"),
+            ],
+            "Software Developer — Government Projects": [
+                ("Green Hydrogen India", "https://greenhydrogen-india.com/"),
+            ],
+        }
+        for role, links in experience_links.items():
+            experience = models.Experience.objects.get(role_title=role)
+            for i, (label, url) in enumerate(links):
+                models.ExperienceLink.objects.create(
+                    experience=experience, label=label, url=url, order=i
+                )
+
         # ---- Skills ----
         models.SkillCategory.objects.all().delete()
         skill_data = [
@@ -155,13 +177,20 @@ class Command(BaseCommand):
         # ---- Projects ----
         models.Project.objects.all().delete()
         proj_data = [
+            ("Smart Engineering & Automation Solutions (SEAS)", "An industrial automation and engineering company delivering smart solutions in PLC, SCADA & HMI, Industrial IoT (IIoT), MIS, control panels, and system integration. SEAS helps industries improve efficiency, monitoring, and operational performance through reliable automation technologies.", ["Django", "Python", "MySQL", "Responsive Design", "Bootstrap", "Web Development"], "https://seas-india.com/"),
             ("Munshiiji ERP", "A cloud-based, multi-tenant ERP platform for Inventory, Sales, Purchase, Accounting, CRM, GST Billing, and Financial Reporting — built for businesses to run their core operations in one place.", ["Python", "Django", "DRF", "PostgreSQL"]),
             ("Ezyschooling.com", "A platform for parents and schools offering simplified online admissions, parenting advice, and education news — backend rebuilt for scale and search performance.", ["Django", "PostgreSQL", "AWS S3", "Elasticsearch"]),
             ("Green Hydrogen India Forum", "REST-API-driven backend for a public discussion forum, plus a companion MVT-based eco-campus website.", ["Python 3", "Django", "PostgreSQL"]),
             ("NEERI Recruitment Portal", "A recruitment portal built with a small team for NEERI, handling listings and candidate workflows end to end.", ["Python", "Django", "PostgreSQL"]),
         ]
-        for i, (title, desc, tech) in enumerate(proj_data):
-            p = models.Project.objects.create(title=title, description=desc, order=i)
+        for i, project in enumerate(proj_data):
+            title, desc, tech, *link = project
+            p = models.Project.objects.create(
+                title=title,
+                description=desc,
+                link=link[0] if link else "",
+                order=i,
+            )
             for j, t in enumerate(tech):
                 models.ProjectTech.objects.create(project=p, name=t, order=j)
 
@@ -191,13 +220,13 @@ class Command(BaseCommand):
         contact.heading = "Let's build something reliable."
         contact.lede = "Open to lead backend / senior Python roles, ERP & SaaS engineering engagements, and freelance projects."
         contact.form_note = "Opens your email client with this message pre-filled — no data leaves your browser."
-        contact.mailto_address = "ssepadrauna@gmail.com"
+        contact.mailto_address = "surajshankargupta@gmail.com"
         contact.save()
 
         models.ContactInfo.objects.all().delete()
         contact_data = [
             ("linkedin", "LinkedIn — in/suraj-shankar-gupta", "https://www.linkedin.com/in/suraj-shankar-gupta/"),
-            ("email", "Email — ssepadrauna@gmail.com", "mailto:ssepadrauna@gmail.com"),
+            ("email", "Email — surajshankargupta@gmail.com", "mailto:surajshankargupta@gmail.com"),
             ("phone", "Phone — +91 86683 29719", "tel:+918668329719"),
             ("location", "Location — Gorakhpur, Uttar Pradesh, India", "#"),
         ]

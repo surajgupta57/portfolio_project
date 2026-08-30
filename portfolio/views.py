@@ -11,7 +11,7 @@ def home(request):
         "about": models.AboutSection.load(),
         "about_chips": models.AboutChip.objects.all(),
 
-        "experiences": models.Experience.objects.prefetch_related("bullets", "tech_stack").all(),
+        "experiences": models.Experience.objects.prefetch_related("bullets", "tech_stack", "site_links").all(),
 
         "skill_categories": models.SkillCategory.objects.prefetch_related("skills").all(),
 

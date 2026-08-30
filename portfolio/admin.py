@@ -30,7 +30,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
             ),
         }),
         ("Layout", {
-            "fields": ("max_width_px", "section_padding_px"),
+            "fields": ("max_width_px", "section_padding_px", "animation_mode"),
         }),
         ("Footer", {
             "fields": ("footer_text", "footer_tagline"),
@@ -142,11 +142,17 @@ class ExperienceTechInline(admin.TabularInline):
     extra = 1
 
 
+class ExperienceLinkInline(admin.TabularInline):
+    model = models.ExperienceLink
+    extra = 1
+    fields = ("label", "url", "order")
+
+
 @admin.register(models.Experience)
 class ExperienceAdmin(admin.ModelAdmin):
     list_display = ("role_title", "organization", "date_range", "is_current", "order")
     list_editable = ("order", "is_current")
-    inlines = [ExperienceBulletInline, ExperienceTechInline]
+    inlines = [ExperienceBulletInline, ExperienceTechInline, ExperienceLinkInline]
 
 
 # ---------------------------------------------------------------------------

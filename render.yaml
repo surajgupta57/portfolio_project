@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: suraj-portfolio
+    runtime: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi:application
+    initialDeployHook: python manage.py seed_portfolio
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        fromService:
+          type: web
+          name: suraj-portfolio
+          property: host
+      - key: DATABASE_URL
+        fromDatabase:
+          name: suraj-portfolio-db
+          property: connectionString
+
+databases:
+  - name: suraj-portfolio-db
+    plan: free
